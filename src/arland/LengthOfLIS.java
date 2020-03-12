@@ -6,39 +6,25 @@ package arland;
 public class LengthOfLIS {
 
     public int lengthOfLIS(int[] nums) {
-
         int n = nums.length;
-
         if(0 == n){
             return 0;
         }
-
         int[] dp = new int[n];
-
         for (int i = 0; i < n; i++) {
-            dp[i] = 1;
-        }
-
-
-        for (int i = 1; i < n; i++) {
             int max = 0;
             for (int j = 0; j < i; j++) {
-                if(nums[j]<nums[i]){
-                    if(max<dp[j]){
-                        max = dp[j];
-                    }
+                if(nums[i]>nums[j]){
+                    max = Math.max(max, dp[j]);
                 }
             }
             dp[i] = max+1;
         }
-
-        int max = 0;
+        int r = dp[0];
         for (int i = 0; i < n; i++) {
-            if(max<dp[i]){
-                max = dp[i];
-            }
+            r = Math.max(r, dp[i]);
         }
-        return max;
+        return r;
     }
 
     public static void main(String[] args) {
