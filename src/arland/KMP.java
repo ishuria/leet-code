@@ -8,39 +8,40 @@ import java.util.Arrays;
 public class KMP {
 
     public int find(char[] s, char[] t){
-        int n = s.length;
-        int m = t.length;
-        int i = 0; int j = 0;
-        int[] next = new int[t.length];
+        int n = t.length;
+        int[] next = new int[n];
         next(t, next);
-        while(j<m&&i<n){
+        int i = 0, j = -1;
+        while(i<s.length&&j<t.length){
             if(j==-1||s[i]==t[j]){
-                i++;
                 j++;
+                i++;
             }
             else{
                 j = next[j];
             }
         }
-        if(j==m){
-            return i-m;
+        if(j==t.length){
+            return i-j;
         }
-        return -1;
+        else {
+            return -1;
+        }
     }
 
     private void next(char[] t, int[] next){
-        int n = t.length;
+        int n = next.length;
+        int j = -1;
+        int i = 0;
         next[0]=-1;
-        int j = -1, i = 0;
         while(i<n-1){
-            if(j==-1||t[j]==t[i]){
+            if(j==-1||t[i]==t[j]){
                 i++;
                 j++;
-//                next[i] = j;
-                if (t[i] != t[j]) {
+                if(t[i]!=t[j]){
                     next[i] = j;
                 }
-                else {
+                else{
                     next[i] = next[j];
                 }
             }
