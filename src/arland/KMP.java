@@ -1,48 +1,43 @@
 package arland;
 
-import java.util.Arrays;
-
 /**
  * @author xiangchaolei
  */
 public class KMP {
 
     public int find(char[] s, char[] t){
-        int n = t.length;
-        int[] next = new int[n];
-        next(t, next);
-        int i = 0, j = -1;
+        int j = -1;
+        int i = 0;
+        int[] next = new int[t.length];
+        next(t,next);
         while(i<s.length&&j<t.length){
             if(j==-1||s[i]==t[j]){
-                j++;
                 i++;
+                j++;
             }
-            else{
+            else {
                 j = next[j];
             }
         }
         if(j==t.length){
             return i-j;
         }
-        else {
-            return -1;
-        }
+        return -1;
     }
 
     private void next(char[] t, int[] next){
-        int n = next.length;
         int j = -1;
         int i = 0;
         next[0]=-1;
-        while(i<n-1){
+        while(i<next.length-1){
             if(j==-1||t[i]==t[j]){
                 i++;
                 j++;
                 if(t[i]!=t[j]){
-                    next[i] = j;
+                    next[i]=j;
                 }
                 else{
-                    next[i] = next[j];
+                    next[i]=next[j];
                 }
             }
             else{
