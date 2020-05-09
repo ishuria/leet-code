@@ -6,41 +6,43 @@ package arland;
 public class KMP {
 
     public int find(char[] s, char[] t){
-        int j = -1;
         int i = 0;
+        int j = -1;
         int[] next = new int[t.length];
-        next(t,next);
+        next(t, next);
         while(i<s.length&&j<t.length){
-            if(j==-1||s[i]==t[j]){
+            if(j==-1||t[j]==s[i]){
                 i++;
                 j++;
             }
-            else {
+            else{
                 j = next[j];
             }
         }
         if(j==t.length){
             return i-j;
         }
-        return -1;
+        else{
+            return -1;
+        }
     }
 
     private void next(char[] t, int[] next){
-        int j = -1;
         int i = 0;
+        int j = -1;
         next[0]=-1;
         while(i<next.length-1){
             if(j==-1||t[i]==t[j]){
                 i++;
                 j++;
                 if(t[i]!=t[j]){
-                    next[i]=j;
+                    next[i] = j;
                 }
                 else{
                     next[i]=next[j];
                 }
             }
-            else{
+            else {
                 j = next[j];
             }
         }
