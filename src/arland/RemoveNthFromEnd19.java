@@ -13,39 +13,20 @@ public class RemoveNthFromEnd19 {
       ListNode(int x) { val = x; }
   }
 
-
     public ListNode removeNthFromEnd(ListNode head, int n) {
-
-        ListNode t =head;
-//        t.next=head;
-
-        for (int i = 0; i < n-1; i++) {
-            if(t==null){
-                return null;
-            }
-            t = t.next;
+        ListNode dummy = new ListNode(0);
+        dummy.next = head;
+        ListNode first = dummy;
+        ListNode second = dummy;
+        for (int i = 1; i <= n + 1; i++) {
+            first = first.next;
         }
-
-        ListNode pre=new ListNode(0);
-        pre.next = head;
-//        pre=head;
-
-        ListNode prepre = null;
-        if(t==null){
-            return null;
+        while (first != null) {
+            first = first.next;
+            second = second.next;
         }
-
-        while(t.next!=null){
-            t=t.next;
-//            prepre = pre;
-            pre=pre.next;
-        }
-
-        ListNode p = pre.next;
-
-        pre.next = pre.next.next;
-        p.next = null;
-        return p;
+        second.next = second.next.next;
+        return dummy.next;
     }
 
     private void print(ListNode head){
@@ -72,9 +53,8 @@ public class RemoveNthFromEnd19 {
 
 
         RemoveNthFromEnd19 a = new RemoveNthFromEnd19();
-        ListNode n = a.removeNthFromEnd(n1,2);
-        System.out.println(n==null?"null":n.val);
-        a.print(n1);
+        ListNode n = a.removeNthFromEnd(n1,5);
+        a.print(n);
 
     }
 }
