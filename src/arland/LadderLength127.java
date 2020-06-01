@@ -39,39 +39,39 @@ public class LadderLength127 {
     }
 
     //digkstra
+    //基于邻接矩阵
     public int bfs(boolean[][] g, int start, int end){
-        int[] p = new int[g.length];
-        boolean[] v = new boolean[g.length];
-        for (int i = 0; i < p.length; i++) {
-            if(i!=start){
-                p[i]=Integer.MAX_VALUE;
-            }
+        int[] distance = new int[g.length];
+        boolean[] visited = new boolean[g.length];
+        for (int i = 0; i < distance.length; i++) {
+            distance[i] = Integer.MAX_VALUE;
         }
-        p[start]=1;
-        v[start] = true;
-        int unVisitNode = g.length ;
+        visited[start]=true;
+        distance[start]=1;
         int index = start;
-        while (unVisitNode > 0 && !v[end] ){
+        int count = g.length;
+        while(count>=0&&!visited[end]){
+            //寻找未访问的最小节点
             int min = Integer.MAX_VALUE;
-            for (int i = 0;i<g.length;i++){
-                if (min > p[i] && !v[i]){
+            for (int i = 0; i < distance.length; i++) {
+                if(distance[i]<min&&!visited[i]){
                     index = i;
-                    min = p[i];
+                    min = distance[i];
                 }
             }
-            for (int i = 0;i<g.length;i++){
-                if (g[index][i] && p[index] + 1 < p[i]){
-                    p[i] = p[index] + 1;
+            for (int i = 0; i < distance.length; i++) {
+                if(g[index][i]){
+                    distance[i] = Math.min(distance[i], distance[index] + 1);
                 }
             }
-            unVisitNode -- ;
-            v[index] = true;
+            count--;
+            visited[index]=true;
         }
-        if(!v[end]){
+        if(!visited[end]){
             return 0;
         }
         else{
-            return p[end];
+            return distance[end];
         }
     }
 
